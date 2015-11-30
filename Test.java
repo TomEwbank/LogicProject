@@ -19,7 +19,16 @@ public class Test
 //	  System.out.println(e.elimination("a <= b"));
 //	  System.out.println(e.elimination("a <=> b"));
 //	  System.out.println(e.elimination("a <~> b"));
-	  System.out.println(d.distribution("(((a))&(b|e)&d)|c"));
+//	  String f = e.elimination("(q=>r)=>((p=>q)=>(p=>r))");
+//	  System.out.println(f);
+//	  f = p.propagation(f);
+//	  System.out.println(f);
+//	  f = d.distribution(f);
+//	  System.out.println(f);
+	  System.out.println(d.distribution("a|(e&q)"));
+	  System.out.println(d.isCNF("a|e&q"));
+//	  String s ="ab";
+//	  s = s.substring(0, 0);
 	  
   }
 }

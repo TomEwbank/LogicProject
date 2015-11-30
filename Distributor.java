@@ -75,7 +75,11 @@ public class Distributor {
 						uselessParenthesis = true;
 					}
 					if (rightSubMembersEnds.size() == 1 && formula.charAt(rightStart) == '(') {
-						leftFormula = formula.substring(0, leftStart) + formula.substring(leftStart+1, leftEnd-1);
+						System.out.println("coucou "+leftEnd);
+						rightFormula = formula.substring(rightStart+1, rightEnd-1); 
+						if (rightEnd != formula.length()) {
+							rightFormula += formula.substring(rightEnd+1);
+						}
 						uselessParenthesis = true;
 					}
 					if (uselessParenthesis) {
@@ -128,7 +132,6 @@ public class Distributor {
 					}
 					// If the execution reach this point, that means the OR can't be distributed, 
 					// so we continue the iteration to go to the next one. 
-					System.out.println("coucou: "+formula);
 				}
 			}
 			
