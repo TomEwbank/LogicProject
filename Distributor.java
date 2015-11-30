@@ -5,8 +5,9 @@ import java.util.ListIterator;
 public class Distributor {
 	public String distribution(String formula) {
 		formula = formula.replaceAll(" ", "");
-		while (!isCNF(formula)) {
-			
+		String prevFormula = new String();
+		while (!formula.equals(prevFormula)) {
+			prevFormula = formula;
 			// find an OR that can be distributed
 			for (int i=0; i<formula.length(); i++) {
 				if (formula.charAt(i) == '|') {
@@ -44,7 +45,8 @@ public class Distributor {
 					int rightEnd = formula.length();
 					LinkedList<Integer> rightSubMembersStarts = new LinkedList<Integer>();
 					LinkedList<Integer> rightSubMembersEnds = new LinkedList<Integer>();
-					rightSubMembersStarts.add(rightStart);  
+					rightSubMembersStarts.add(rightStart);
+					level = 0;
 					for (int j = i+1; j < formula.length(); j++) {
 						if (formula.charAt(j) == '(') {
 							++level;
@@ -75,10 +77,9 @@ public class Distributor {
 						uselessParenthesis = true;
 					}
 					if (rightSubMembersEnds.size() == 1 && formula.charAt(rightStart) == '(') {
-						System.out.println("coucou "+leftEnd);
 						rightFormula = formula.substring(rightStart+1, rightEnd-1); 
 						if (rightEnd != formula.length()) {
-							rightFormula += formula.substring(rightEnd+1);
+							rightFormula += formula.substring(rightEnd);
 						}
 						uselessParenthesis = true;
 					}
@@ -133,41 +134,11 @@ public class Distributor {
 					// If the execution reach this point, that means the OR can't be distributed, 
 					// so we continue the iteration to go to the next one. 
 				}
+				
 			}
 			
 		}
 			
 		return formula;
-	}
-	
-	public boolean isCNF(String formula) {
-		int level = 0;
-		int maxLevelAND = -1;
-		int minLevelOR = -1;
-		for (int i = 0; i < formula.length(); i++) {
-			if (formula.charAt(i) == '(') {
-				++level;
-			}
-			else if (formula.charAt(i) == ')') {
-				--level;
-			}
-			else if (formula.charAt(i) == '&') {
-				if (level > maxLevelAND) {
-					maxLevelAND = level;
-				}
-				if (level == 0) {
-					minLevelOR = -1;
-				}
-			}
-			else if (formula.charAt(i) == '|') {
-				if (minLevelOR == -1 || level < minLevelOR) {
-					minLevelOR = level;
-				}
-			}
-			if (maxLevelAND != -1 && minLevelOR != -1 && maxLevelAND >= minLevelOR) {
-				return false;
-			}
-		}
-		return true;		
 	}
 }

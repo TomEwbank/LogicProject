@@ -14,7 +14,6 @@ public class Eliminator {
 
 		while (m.find()) {
 			String[] parts;
-			System.out.println(formula.substring(m.start(), m.end()));
 			if (formula.substring(m.start(), m.end()).equals("=>")) {
 				parts = getMembers(formula, "=>");
 				formula = parts[0] + "~(" + parts[1] + ")|(" + parts[2] + ")" + parts[3];
