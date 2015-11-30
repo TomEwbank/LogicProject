@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 public class Propagator {
 	public String propagation(String formula) {
+		formula = formula.replaceAll(" ", "");
 		Pattern p = Pattern.compile("~\\(");
 		Matcher m = p.matcher(formula);
 
@@ -26,7 +27,7 @@ public class Propagator {
 				else if (formula.charAt(i) == ')') {
 					--level;
 				}
-				if (level == 0 & formula.charAt(i) == '|') {
+				if (level == 0 && formula.charAt(i) == '|') {
 					membersEnds.add(i);
 					membersStarts.add(i+1);
 				}
@@ -62,7 +63,7 @@ public class Propagator {
 					else if (formula.charAt(i) == ')') {
 						--level;
 					}
-					if (level == 0 & formula.charAt(i) == '&') {
+					if (level == 0 && formula.charAt(i) == '&') {
 						membersEnds.add(i);
 						membersStarts.add(i+1);
 					}

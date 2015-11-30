@@ -8,6 +8,7 @@ public class Eliminator {
 	public String elimination(String formula) {
 
 		formula = formula.replaceAll("<=>", "<>");
+		formula = formula.replaceAll(" ", "");
 		Pattern p = Pattern.compile("=>|<=|<>|<~>");
 		Matcher m = p.matcher(formula);
 
@@ -16,16 +17,16 @@ public class Eliminator {
 			System.out.println(formula.substring(m.start(), m.end()));
 			if (formula.substring(m.start(), m.end()).equals("=>")) {
 				parts = getMembers(formula, "=>");
-				formula = parts[0] + "~(" + parts[1] + ") | (" + parts[2] + ")" + parts[3];
+				formula = parts[0] + "~(" + parts[1] + ")|(" + parts[2] + ")" + parts[3];
 			} else if (formula.substring(m.start(), m.end()).equals("<=")) {
 				parts = getMembers(formula, "<=");
-				formula = parts[0] + "(" + parts[1] + ") | ~(" + parts[2] + ")" + parts[3];
+				formula = parts[0] + "(" + parts[1] + ")|~(" + parts[2] + ")" + parts[3];
 			} else if (formula.substring(m.start(), m.end()).equals("<>")) {
 				parts = getMembers(formula, "<>");
 				formula = parts[0] + "(" + parts[1] + ")" + parts[3];
 			} else {
 				parts = getMembers(formula, "<~>");
-				formula = parts[0] + "((" + parts[1] + ") | (" + parts[2] +")) & ~((" + parts[1] + ") & (" + parts[2] + "))" + parts[3];
+				formula = parts[0] + "((" + parts[1] + ")|(" + parts[2] +"))&~((" + parts[1] + ")&(" + parts[2] + "))" + parts[3];
 			}
 			m = p.matcher(formula);
 		}
