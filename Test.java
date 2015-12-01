@@ -14,7 +14,7 @@ public class Test
 		CNFmaker c = new CNFmaker();
 
 		// test1
-		String f = e.elimination("~((q=>r)=>((p=>q)=>(p=>r)))");
+		String f = e.elimination("~((q=>$true)=>((p=>q)=>(p=>$true)))");
 		System.out.println(f);
 		f = p.propagation(f);
 		System.out.println(f);

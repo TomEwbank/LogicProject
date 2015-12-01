@@ -171,13 +171,13 @@ public class Distributor {
 			m = p.matcher(formula);
 		}
 		
-		p = Pattern.compile(">\\([a-zA-Z0-9_~]+&");
+		p = Pattern.compile(">\\([a-zA-Z0-9_~\\$]+&");
 		m = p.matcher(">"+formula);
 		if (m.find()) {
 			formula = formula.substring(1);
 		}
 		
-		p = Pattern.compile("&[a-zA-Z0-9_~]+\\)<");
+		p = Pattern.compile("&[a-zA-Z0-9_~\\$]+\\)<");
 		m = p.matcher(formula+"<");
 		if (m.find()) {
 			formula = formula.substring(0,formula.length()-1);
