@@ -1,5 +1,7 @@
 import java.util.LinkedList;
 import java.util.ListIterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class Distributor {
@@ -139,6 +141,49 @@ public class Distributor {
 			
 		}
 			
+		return cleanParenthesis(formula);
+	}
+
+	private String cleanParenthesis(String formula) {
+		String prevFormula = new String();
+		while (!formula.equals(prevFormula)) {
+			prevFormula = formula;
+			//formula = formula.replaceAll("\\)\\)&\\(\\(", ")&(");
+			formula = formula.replaceAll("\\)\\)", ")");
+			formula = formula.replaceAll("\\(\\(", "(");
+		}
+		
+		Pattern p = Pattern.compile("&\\([a-zA-Z0-9_~]+&");
+		Matcher m = p.matcher(formula);
+
+		while (m.find()) {
+			formula = 	  formula.substring(0, m.start()+1)
+						+ formula.substring(m.start()+2);
+			m = p.matcher(formula);
+		}
+		
+		p = Pattern.compile("&[a-zA-Z0-9_~]\\)+&");
+		m = p.matcher(formula);
+		
+		while (m.find()) {
+			formula = 	  formula.substring(0, m.end()-2)
+						+ formula.substring(m.end()-1);
+			m = p.matcher(formula);
+		}
+		
+		p = Pattern.compile(">\\([a-zA-Z0-9_~]+&");
+		m = p.matcher(">"+formula);
+		if (m.find()) {
+			formula = formula.substring(1);
+		}
+		
+		p = Pattern.compile("&[a-zA-Z0-9_~]+\\)<");
+		m = p.matcher(formula+"<");
+		if (m.find()) {
+			formula = formula.substring(0,formula.length()-1);
+		}
+		
 		return formula;
 	}
+
 }
