@@ -5,6 +5,10 @@ import java.util.regex.Pattern;
 
 
 public class Distributor {
+	
+	// When taking a valid formula as argument, only containing the OR, AND and NOT operators,
+	// and in which all the negations had been propagated and the double negations removed,
+	// Return the equivalent formula in the CNF form.
 	public String distribution(String formula) {
 		formula = formula.replaceAll(" ", "");
 		String prevFormula = new String();
@@ -135,20 +139,19 @@ public class Distributor {
 					}
 					// If the execution reach this point, that means the OR can't be distributed, 
 					// so we continue the iteration to go to the next one. 
-				}
-				
+				}	
 			}
-			
 		}
 			
 		return cleanParenthesis(formula);
 	}
 
+	// When taking a valid CNF formula as argument,
+	// Return the equivalent formula where all the unnecessary parenthesis has been removed
 	private String cleanParenthesis(String formula) {
 		String prevFormula = new String();
 		while (!formula.equals(prevFormula)) {
 			prevFormula = formula;
-			//formula = formula.replaceAll("\\)\\)&\\(\\(", ")&(");
 			formula = formula.replaceAll("\\)\\)", ")");
 			formula = formula.replaceAll("\\(\\(", "(");
 		}

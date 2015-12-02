@@ -5,6 +5,9 @@ import java.util.regex.Pattern;
 
 
 public class Propagator {
+	
+	// When taking a valid formula as argument, only containing the OR, AND and NOT operators,
+	// Return the equivalent formula where all the negations has been propagated, and the double negations removed
 	public String propagation(String formula) {
 		formula = formula.replaceAll(" ", "");
 		Pattern p = Pattern.compile("~\\(");

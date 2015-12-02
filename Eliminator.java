@@ -4,10 +4,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Eliminator {
-
+	
+	// Take a valid formula as argument,
+	// Return the equivalent formula where all the other operators than OR, AND and NOT has been eliminated
 	public String elimination(String formula) {
 
-		formula = formula.replaceAll("<=>", "<>");
+		formula = formula.replaceAll("<=>", "<>"); // to prevent the regex pattern of matching <= or => in case of <=>
 		formula = formula.replaceAll(" ", "");
 		Pattern p = Pattern.compile("=>|<=|<>|<~>");
 		Matcher m = p.matcher(formula);
@@ -32,6 +34,10 @@ public class Eliminator {
 		return formula;
 	}
 	
+	// Takes a formula and a particular connector as argument (=>|<=|<>|<~>),
+	// Returns an array of size 4, 
+	// where the two middle elements are the left and right members of the first specified connector encountered,
+	// and the first and last elements are respectively the beginning and the ending of the formula, surrounding the left and right members 
 	private String[] getMembers(String formula, String connector) {
 		String[] formulaParts = formula.split(connector, 2);
 		  if (formulaParts.length == 1) {
@@ -95,95 +101,6 @@ public class Eliminator {
 			  parts[2] = right.substring(0, rightEnd+1);
 			  parts[3] = right.substring(rightEnd+1);
 		  }
-		return parts;
-		  
+		return parts;	  
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	public LinkedList<Token> elimination(String formula) {
-//		LogicTokenizer tokenizer = new LogicTokenizer(formula);
-//		LinkedList<Token> tokens = tokenizer.getTokens();
-//		
-//		ListIterator<Token> it = tokens.listIterator(0);
-//		ListIterator<Token> right_it;
-//		ListIterator<Token> left_it;
-//		while (it.hasNext()) {
-//			Token t = it.next();
-//			Token t_left;
-//			System.out.println(t.token);
-//			if (t.token == LogicElementID.IMPLIES_R) {
-//				it.set(new Token(LogicElementID.OR, "|"));
-//				left_it = tokens.listIterator(it.nextIndex()-2);
-////				left_it.previous();
-//				left_it.add(new Token(LogicElementID.R_PAREN, ")"));
-//				left_it.add(new Token(LogicElementID.R_PAREN, "("));
-//				System.out.println("coucou  "+it.next().sequence);
-//				t_left = left_it.previous();
-//				int level = 0;
-//				while (level >= 0) {
-//					if (!it.hasPrevious()) {
-//						break;
-//					}
-//					else if (it.previous().token == LogicElementID.R_PAREN) {
-//						++level;
-//					}
-//					else if (it.previous().token == LogicElementID.L_PAREN) {
-//						--level;
-//					}
-//				}
-//				it.add(new Token(LogicElementID.R_PAREN, ")"));
-//				
-//		
-//			}
-//			else if (t.token == LogicElementID.IMPLIES_L) {
-//				if (it.next().token == LogicElementID.L_PAREN) {
-//					it.previous();
-//					it.add(new Token(LogicElementID.NOT, "~"));
-//				} else {
-//					it.previous();
-//					it.add(new Token(LogicElementID.NOT, "~"));
-//					it.add(new Token(LogicElementID.L_PAREN, "("));
-//					// find the right place to insert ")"
-//					int level = 0;
-//					while (level >= 0) {
-//						if (!it.hasNext()) {
-//							break;
-//						}
-//						else if (it.next().token == LogicElementID.L_PAREN) {
-//							++level;
-//						}
-//						else if (it.next().token == LogicElementID.R_PAREN) {
-//							--level;
-//						}
-//					}
-//					it.add(new Token(LogicElementID.R_PAREN, ")"));
-//				}
-//				
-//			}
-//			else if (t.token == LogicElementID.EQUIV) {
-//				
-//			}
-//			else if (t.token == LogicElementID.XOR) {
-//				
-//			}
-//			
-//			
-//		}
-//		
-//		return tokens;
-//	}
-	
 }
